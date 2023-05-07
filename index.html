@@ -1,0 +1,37 @@
+<html>
+
+<head>
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    <script type="module" src="main.js" crossorigin="anonymous"></script>
+</head>
+<h1>Recognize hand gestures and send them across serial port</h1>
+
+<section id="demos" class="invisible">
+    <h2><br>Webcam continuous hand gesture detection</h2>
+    <p>Use your hand to make gestures in front of the camera to get gesture classification. </br>Click <b>enable
+            webcam</b> below and grant access to the webcam if prompted.</p>
+
+    <div id="liveView" class="videoView">
+        <button id="webcamButton" class="mdc-button mdc-button--raised">
+            <span class="mdc-button__ripple"></span>
+            <span class="mdc-button__label">ENABLE WEBCAM</span>
+        </button>
+        <button id="serialButton" class="mdc-button mdc-button--raised">
+            <span class="mdc-button__ripple"></span>
+            <span class="mdc-button__label">ENABLE SERIAL COMMUNICATION</span>
+        </button>
+        <div style="position: relative;">
+            <video id="webcam" autoplay playsinline></video>
+            <canvas class="output_canvas" id="output_canvas" width="1920" height="1080"
+                style="position: absolute; left: 0px; top: 0px;"></canvas>
+            <p id='gesture_output' class="output">
+        </div>
+    </div>
+</section>
+
+</html>
