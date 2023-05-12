@@ -119,8 +119,8 @@ async function predictWebcam() {
         gestureOutput.style.width = videoWidth;
         const categoryName = results.gestures[0][0].categoryName;
         const categoryScore = parseFloat(results.gestures[0][0].score * 100).toFixed(2);
+        console.log(`${categoryName}: ${categoryScore}`);
         if (serialConnected && categoryName !== "None" && categoryName !== lastCategory) {
-            console.log(`${categoryName}: ${categoryScore}`);
             await writer.write(encoder.encode(categoryName));
         }
         gestureOutput.innerText = `GestureRecognizer: ${categoryName}\n Confidence: ${categoryScore} %`;
