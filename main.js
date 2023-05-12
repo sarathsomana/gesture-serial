@@ -57,6 +57,7 @@ else {
     console.warn("getUserMedia() is not supported by your browser");
 }
 
+// Add serial button event listener to activate and select serial. 
 enableSerialButton.addEventListener("click", enableSerial);
 // Enable the live webcam view and start detection.
 function enableCam(event) {
@@ -85,7 +86,7 @@ function enableCam(event) {
 let writer;
 async function predictWebcam() {
     const webcamElement = document.getElementById("webcam");
-    // Now let's start detecting the stream.
+
     if (runningMode === "IMAGE") {
         runningMode = "VIDEO";
         await gestureRecognizer.setOptions({ runningMode: "VIDEO" });
@@ -112,15 +113,16 @@ async function predictWebcam() {
         }
     }
     canvasCtx.restore();
+    let lastCategory = "None";
     if (results.gestures.length > 0) {
         gestureOutput.style.display = "block";
         gestureOutput.style.width = videoWidth;
         const categoryName = results.gestures[0][0].categoryName;
-        console.log(categoryName);
-        if (serialConnected) {
+        const categoryScore = parseFloat(results.gestures[0][0].score * 100).toFixed(2);
+        if (serialConnected && categoryName !== "None" && categoryName !== lastCategory) {
+            console.log(`${categoryName}: ${categoryScore}`);
             await writer.write(encoder.encode(categoryName));
         }
-        const categoryScore = parseFloat(results.gestures[0][0].score * 100).toFixed(2);
         gestureOutput.innerText = `GestureRecognizer: ${categoryName}\n Confidence: ${categoryScore} %`;
     }
     else {
